@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-public class FavColorInputConsumer {
+public class ColorInputConsumer {
 
     private final static String GROUP_ID = "fav_color_consumer_test";
 
@@ -15,7 +15,7 @@ public class FavColorInputConsumer {
         Properties consumerProperties = createConsumerProperties(GROUP_ID, "localhost:9092");
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(consumerProperties);
 
-        kafkaConsumer.subscribe(singletonList(FavProducer.FAV_COLOR_INPUT_TOPIC));
+        kafkaConsumer.subscribe(singletonList(ColorProducer.FAV_COLOR_INPUT_TOPIC));
 
         while (true) {
             ConsumerRecords<String, String> records = kafkaConsumer.poll(1000);

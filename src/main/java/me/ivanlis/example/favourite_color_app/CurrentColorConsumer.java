@@ -1,14 +1,14 @@
 package me.ivanlis.example.favourite_color_app;
 
 import static java.util.Collections.singletonList;
-import static me.ivanlis.example.favourite_color_app.FavColorCounter.*;
+import static me.ivanlis.example.favourite_color_app.ColorCounter.*;
 import static me.ivanlis.example.utils.Utils.createConsumerProperties;
 
 import java.util.Properties;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-public class FavCurrentColorConsumer {
+public class CurrentColorConsumer {
 
     private final static String GROUP_ID = "fav_current_consumer_test";
 

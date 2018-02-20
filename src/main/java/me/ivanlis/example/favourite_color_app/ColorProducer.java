@@ -9,7 +9,7 @@ import me.ivanlis.example.favourite_color_app.FavColor.Color;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-public class FavProducer {
+public class ColorProducer {
 
     public static final String FAV_COLOR_INPUT_TOPIC = "fav_color_input";
 

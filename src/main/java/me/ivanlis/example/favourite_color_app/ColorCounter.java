@@ -9,7 +9,7 @@ import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
 
-public class FavColorCounter {
+public class ColorCounter {
 
     public static final String CURRENT_FAV_COLOR_COUNT_OUTPUT_TOPIC = "current_fav_color";
 
@@ -20,7 +20,7 @@ public class FavColorCounter {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, String> favColorInput = builder.stream(FavProducer.FAV_COLOR_INPUT_TOPIC);
+        KStream<String, String> favColorInput = builder.stream(ColorProducer.FAV_COLOR_INPUT_TOPIC);
 
         KTable<String, String> currentFavColor = favColorInput.groupByKey()
                 .reduce((oldVal, newValue ) -> newValue, Materialized.as("Count"));
