@@ -24,12 +24,11 @@ public class ColorProducer {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(createProducerProperties("localhost:9092"));
 
         List<FavColor> msgs = Arrays.asList(
-                new FavColor(IVAN, Color.BLUE),
-                new FavColor(EVELINA, Color.RED),
-                new FavColor(KARINA, Color.BLACK),
-                new FavColor(MICHAEL, Color.RED),
-                new FavColor(EVELINA, Color.BLUE),
-                new FavColor(STEPHEN, Color.BLUE)
+                new FavColor(IVAN, Color.BLACK),
+                new FavColor(KARINA, Color.RED)
+//                new FavColor(MICHAEL, Color.RED),
+//                new FavColor(EVELINA, Color.BLUE),
+//                new FavColor(STEPHEN, Color.BLUE)
         );
 
         msgs.forEach(msg -> {
