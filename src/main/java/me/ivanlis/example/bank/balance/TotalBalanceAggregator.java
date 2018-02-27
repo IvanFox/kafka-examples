@@ -4,23 +4,24 @@ import com.google.gson.Gson;
 import java.util.Properties;
 import me.ivanlis.example.bank.balance.messages.Transaction;
 import me.ivanlis.example.utils.Constants;
-import me.ivanlis.example.utils.Utils;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
+import org.apache.kafka.streams.state.KeyValueStore;
 
-public class TransactionAggregator {
+public class TotalBalanceAggregator {
 
     private final static String APP_ID = "transaction_aggregator";
 
     private final static Gson GSON = new Gson();
 
-    private final static String TOTAL_BALANCE = "totalBalance";
+    public final static String TOTAL_BALANCE_TOPIC = "totalBalance";
 
     public static void main(String[] args) {
         Properties properties = new Properties();
@@ -39,10 +40,13 @@ public class TransactionAggregator {
                 .aggregate(
                         () -> 0L,
                         ((key, value, aggregate) -> aggregate + GSON.fromJson(value, Transaction.class).getAmount().longValue()),
-                        Materialized.as("total_balance")
+                        Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as(
+                                "total_count" /* table/store name */)
+                                .withKeySerde(Serdes.String()) /* key serde */
+                                .withValueSerde(Serdes.Long()) /* value serde */
                 );
 
-        totalBalance.to(Serdes.String(), Serdes.Long(), TOTAL_BALANCE);
+        totalBalance.to(Serdes.String(), Serdes.Long(), TOTAL_BALANCE_TOPIC);
 
         KafkaStreams streams = new KafkaStreams(builder.build(), properties);
         streams.start();
