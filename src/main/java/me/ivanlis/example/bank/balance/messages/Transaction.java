@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.Value;
 
+@Value
 @Getter
 @ToString
 @EqualsAndHashCode

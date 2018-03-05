@@ -5,6 +5,7 @@ import static me.ivanlis.example.utils.Utils.createConsumerProperties;
 
 import java.util.Properties;
 import lombok.val;
+import me.ivanlis.example.utils.Constants;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 public class TransactionConsumer {
@@ -12,7 +13,7 @@ public class TransactionConsumer {
     private static final String GROUP_ID = "transactionConsumer";
 
     public static void main(String[] args) {
-        Properties consumerProperties = createConsumerProperties(GROUP_ID, "localhost:9092");
+        Properties consumerProperties = createConsumerProperties(GROUP_ID, Constants.BROKER);
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(consumerProperties);
 
         kafkaConsumer.subscribe(asList(TransactionProducer.TRANSACTION_TOPIC));
