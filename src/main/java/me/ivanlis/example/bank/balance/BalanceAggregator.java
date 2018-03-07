@@ -23,7 +23,7 @@ import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.Serialized;
 import org.apache.kafka.streams.state.KeyValueStore;
 
-public class TotalBalanceAggregator {
+public class BalanceAggregator {
 
     private final static String APP_ID = "transaction_aggregator1";
 
@@ -49,8 +49,8 @@ public class TotalBalanceAggregator {
         final KTable<String, Balance> totalBalance = transactions
                 .groupByKey()
                 .aggregate(
-                        () -> new Balance("", new BigDecimal(0)),
-                        ((key, value, aggregate) -> Balance.calculateBalance(aggregate, value)),
+                        () -> new Balance("", new BigDecimal(0), 1),
+                        ((key, value, aggregate) -> new Balance(key, aggregate, value)),
                         Materialized.<String, Balance, KeyValueStore<Bytes, byte[]>>as(
                                 "total_count" /* table/store name */)
                                 .withKeySerde(Serdes.String()) /* key serde */

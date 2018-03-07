@@ -1,16 +1,30 @@
 package me.ivanlis.example.bank.balance.messages;
 
 import java.math.BigDecimal;
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
-@Value
+@Getter
+@ToString
+@EqualsAndHashCode
 public class Balance {
 
-    String name;
+    private final String name;
 
-    BigDecimal balance;
+    private final BigDecimal balance;
 
-    public static Balance calculateBalance(Balance oldBalance, Transaction transaction) {
-        return new Balance(oldBalance.name, oldBalance.balance.add(transaction.getAmount()));
+    private final int count;
+
+    public Balance(String name, BigDecimal balance, Integer count) {
+        this.name = name;
+        this.balance = balance;
+        this.count = count;
+    }
+
+    public Balance(String name, Balance balance, Transaction transaction) {
+        this.name = name;
+        this.balance = balance.balance.add(transaction.getAmount());
+        this.count = (balance.getCount() + 1);
     }
 }

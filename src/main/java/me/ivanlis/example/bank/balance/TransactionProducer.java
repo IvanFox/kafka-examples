@@ -1,25 +1,17 @@
 package me.ivanlis.example.bank.balance;
 
-import static me.ivanlis.example.utils.Utils.createProducerProperties;
-
-import com.google.gson.Gson;
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import me.ivanlis.example.bank.balance.messages.Transaction;
-import me.ivanlis.example.bank.balance.serializers.TransactionDeserializer;
 import me.ivanlis.example.bank.balance.serializers.TransactionSerializer;
 import me.ivanlis.example.utils.Constants;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.apache.kafka.streams.kstream.Serialized;
 
 public class TransactionProducer {
 
@@ -55,7 +47,7 @@ public class TransactionProducer {
         while (finishTime > System.currentTimeMillis()) {
             String customerName = CUSTOMER_NAMES[RANDOM_GENERATOR.nextInt(CUSTOMER_NAMES.length)];
 
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.SECONDS.sleep(2);
 
             Transaction transaction = new Transaction(customerName, new BigDecimal(ThreadLocalRandom.current().nextInt(0, 100)));
 

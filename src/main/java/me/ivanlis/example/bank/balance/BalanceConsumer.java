@@ -1,19 +1,14 @@
 package me.ivanlis.example.bank.balance;
 
 import static java.util.Arrays.asList;
-import static me.ivanlis.example.utils.Utils.createConsumerProperties;
 
 import java.util.Properties;
 import lombok.val;
-import me.ivanlis.example.bank.balance.messages.Balance;
-import me.ivanlis.example.bank.balance.serializers.BalanceDeserializer;
-import me.ivanlis.example.bank.balance.serializers.BalanceSerde;
 import me.ivanlis.example.utils.Constants;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-public class TotalBalanceConsumer {
+public class BalanceConsumer {
 
     private static final String GROUP_ID = "totalBalanceCons1";
 
@@ -29,7 +24,7 @@ public class TotalBalanceConsumer {
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
 
-        kafkaConsumer.subscribe(asList(TotalBalanceAggregator.TOTAL_BALANCE_TOPIC));
+        kafkaConsumer.subscribe(asList(BalanceAggregator.TOTAL_BALANCE_TOPIC));
 
         while (true) {
             val consumerRecords = kafkaConsumer.poll(100);
