@@ -1,16 +1,19 @@
 package me.ivanlis.example.bank.balance;
 
+import static me.ivanlis.example.utils.Utils.*;
+
 import java.math.BigDecimal;
-import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import me.ivanlis.example.bank.balance.messages.Transaction;
 import me.ivanlis.example.bank.balance.serializers.TransactionSerializer;
 import me.ivanlis.example.utils.Constants;
+import me.ivanlis.example.utils.Utils;
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.IntegerDeserializer;
+import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 public class TransactionProducer {
@@ -29,17 +32,12 @@ public class TransactionProducer {
     private static final Random RANDOM_GENERATOR = new Random();
 
     public static void main(String[] args) throws InterruptedException {
-        Properties properties = new Properties();
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Constants.BROKER);
-        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, TransactionSerializer.class.getName());
-        properties.setProperty(ProducerConfig.ACKS_CONFIG, "all"); // must be set to all for indopotent
-        properties.setProperty(ProducerConfig.RETRIES_CONFIG, "5");
-        properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "1"); // flush message every ms
-        properties.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
-
-
-        final KafkaProducer<String, Transaction> kafkaProducer = new KafkaProducer<>(properties);
+        final KafkaProducer<String, Transaction> kafkaProducer = new KafkaProducer<>(createExactlyOnceProducer(
+                Constants.BROKER,
+                StringSerializer.class.getName(),
+                TransactionSerializer.class.getName()
+                )
+        );
 
         final int nMinutes = 1;
         final long finishTime = System.currentTimeMillis() + nMinutes * 60 * 1000; // current time + nMinutes

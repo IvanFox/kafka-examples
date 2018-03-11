@@ -2,8 +2,9 @@ package me.ivanlis.example.utils;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import me.ivanlis.example.bank.balance.serializers.TransactionSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -19,6 +20,18 @@ public class Utils {
         properties.setProperty("acks", "1");
         properties.setProperty("retries", "5");
         properties.setProperty("linger.ms", "1"); // flush message every ms
+        return properties;
+    }
+
+    public static Properties createExactlyOnceProducer(String serverConfig, String keySerializer, String valueSerializer) {
+        Properties properties = new Properties();
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, serverConfig);
+        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
+        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
+        properties.setProperty(ProducerConfig.ACKS_CONFIG, "all"); // must be set to all for indopotent
+        properties.setProperty(ProducerConfig.RETRIES_CONFIG, "5");
+        properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "1"); // flush message every ms
+        properties.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
         return properties;
     }
 
@@ -43,6 +56,8 @@ public class Utils {
         properties.setProperty("auto.offset.reset", "earliest");
         return properties;
     }
+
+
 
     public static void sleepFor(long seconds) {
         try {
