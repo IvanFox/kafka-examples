@@ -76,4 +76,8 @@ public class PhoneNumberSerde implements Serde<PhoneNumber> {
 
         }
     }
+
+    public static PhoneNumberSerde phoneNumberSerde() {
+        return new PhoneNumberSerde();
+    }
 }
