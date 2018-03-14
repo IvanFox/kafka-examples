@@ -1,6 +1,7 @@
 package me.ivanlis.example.enricher.serialisers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.nio.charset.Charset;
 import java.util.Map;
 import me.ivanlis.example.enricher.messages.PhoneNumber;
@@ -10,7 +11,8 @@ import org.apache.kafka.common.serialization.Serializer;
 
 public class PhoneNumberSerde implements Serde<PhoneNumber> {
     private static final Charset CHARSET = Charset.forName("UTF-8");
-    private static final Gson GSON = new Gson();
+    private static final GsonBuilder GSON_BUILDER = new GsonBuilder().serializeNulls();
+    private static final Gson GSON = GSON_BUILDER.create();
 
     private final PhoneNumberSerialiser serialiser = new PhoneNumberSerialiser();
     private final PhoneNumberDeserialiser deserialiser = new PhoneNumberDeserialiser();

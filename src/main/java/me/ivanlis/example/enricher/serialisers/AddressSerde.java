@@ -1,6 +1,7 @@
 package me.ivanlis.example.enricher.serialisers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.nio.charset.Charset;
 import java.util.Map;
 import me.ivanlis.example.enricher.messages.Address;
@@ -11,7 +12,8 @@ import org.apache.kafka.common.serialization.Serializer;
 public class AddressSerde implements Serde <Address> {
 
     private static final Charset CHARSET = Charset.forName("UTF-8");
-    private static final Gson GSON = new Gson();
+    private static final GsonBuilder GSON_BUILDER = new GsonBuilder().serializeNulls();
+    private static final Gson GSON = GSON_BUILDER.create();
 
     private final AddressSerialiser serialiser = new AddressSerialiser();
     private final AddressDeserialiser deserialiser = new AddressDeserialiser();
@@ -72,5 +74,9 @@ public class AddressSerde implements Serde <Address> {
         public void close() {
 
         }
+    }
+
+    public static AddressSerde addressSerde() {
+        return new AddressSerde();
     }
 }

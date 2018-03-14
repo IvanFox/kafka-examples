@@ -1,7 +1,7 @@
 package me.ivanlis.example.bank.balance;
 
 import static java.util.Arrays.asList;
-import static me.ivanlis.example.utils.Utils.createConsumerProperties;
+import static me.ivanlis.example.utils.Utils.createDefaultConsumerProperties;
 
 import java.util.Properties;
 import lombok.val;
@@ -13,7 +13,7 @@ public class TransactionConsumer {
     private static final String GROUP_ID = "transactionConsumer";
 
     public static void main(String[] args) {
-        Properties consumerProperties = createConsumerProperties(GROUP_ID, Constants.BROKER);
+        Properties consumerProperties = createDefaultConsumerProperties(GROUP_ID, Constants.BROKER);
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(consumerProperties);
 
         kafkaConsumer.subscribe(asList(TransactionProducer.TRANSACTION_TOPIC));

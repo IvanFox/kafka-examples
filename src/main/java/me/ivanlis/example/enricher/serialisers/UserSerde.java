@@ -1,6 +1,7 @@
 package me.ivanlis.example.enricher.serialisers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.nio.charset.Charset;
 import java.util.Map;
 import me.ivanlis.example.enricher.messages.User;
@@ -11,7 +12,8 @@ import org.apache.kafka.common.serialization.Serializer;
 public class UserSerde implements Serde<User> {
 
     private static final Charset CHARSET = Charset.forName("UTF-8");
-    private static final Gson GSON = new Gson();
+    private static final GsonBuilder GSON_BUILDER = new GsonBuilder().serializeNulls();
+    private static final Gson GSON = GSON_BUILDER.create();
 
     private final UserSerialiser serialiser = new UserSerialiser();
     private final UserDeserialiser deserialiser = new UserDeserialiser();
@@ -65,12 +67,17 @@ public class UserSerde implements Serde<User> {
 
         @Override
         public User deserialize(String topic, byte[] data) {
-            return GSON.fromJson(new String(data, CHARSET), User.class);
+            String userData = new String(data, CHARSET);
+            return GSON.fromJson(userData, User.class);
         }
 
         @Override
         public void close() {
 
         }
+    }
+
+    public static UserSerde userSerde() {
+        return new UserSerde();
     }
 }

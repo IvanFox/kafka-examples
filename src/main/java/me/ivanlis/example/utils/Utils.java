@@ -45,11 +45,37 @@ public class Utils {
         return properties;
     }
 
-    public static Properties createConsumerProperties(String groupId, String serverConfig) {
+    public static Properties createCustomStreamProperties(String appId, String serverConfig, Class<?> keySerde, Class<?> valueSerde, boolean exactlyOnce) {
+        Properties properties = new Properties();
+        properties.put(StreamsConfig.APPLICATION_ID_CONFIG, appId);
+        properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, serverConfig);
+        properties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, keySerde);
+        properties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, valueSerde);
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
+        // Exactly once guarantee
+        if (exactlyOnce) properties.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
+
+        return properties;
+    }
+
+    public static Properties createDefaultConsumerProperties(String groupId, String serverConfig) {
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers", serverConfig);
         properties.setProperty("key.deserializer", StringDeserializer.class.getName());
         properties.setProperty("value.deserializer", StringDeserializer.class.getName());
+        properties.setProperty("group.id", groupId);
+        properties.setProperty("enable.auto.commit", "true");
+        properties.setProperty("auto.commit.interval.ms", "1000"); //every second the offset will be commited
+        properties.setProperty("auto.offset.reset", "earliest");
+        return properties;
+    }
+
+    public static Properties createCustomConsumerProperties(String groupId, String serverConfig, String keyDeserialiser, String valueDeserialiser) {
+        Properties properties = new Properties();
+        properties.setProperty("bootstrap.servers", serverConfig);
+        properties.setProperty("key.deserializer", keyDeserialiser);
+        properties.setProperty("value.deserializer", valueDeserialiser);
         properties.setProperty("group.id", groupId);
         properties.setProperty("enable.auto.commit", "true");
         properties.setProperty("auto.commit.interval.ms", "1000"); //every second the offset will be commited

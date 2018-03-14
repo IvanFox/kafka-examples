@@ -1,4 +1,4 @@
-package me.ivanlis.example.enricher;
+package me.ivanlis.example.enricher.producers;
 
 import static me.ivanlis.example.utils.Utils.createExactlyOnceProducer;
 import static me.ivanlis.example.utils.Utils.sleepFor;

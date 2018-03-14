@@ -1,7 +1,9 @@
-package me.ivanlis.example.enricher;
+package me.ivanlis.example.enricher.producers;
 
 import java.util.Arrays;
 import java.util.Properties;
+import me.ivanlis.example.enricher.messages.Address;
+import me.ivanlis.example.enricher.messages.PhoneNumber;
 import me.ivanlis.example.enricher.messages.User;
 import me.ivanlis.example.enricher.serialisers.UserSerde;
 import me.ivanlis.example.utils.Constants;
@@ -15,15 +17,15 @@ public class UserDataProducer {
     public static final Integer MAX_USER_ID = 5;
 
     private static final User[] USERS = {
-            new User(1,"James Doe", null, null),
-            new User(2,"James Rodriguez", null, null),
-            new User(2,"Sanctioned man", null, null),
-            new User(3,"Good Guy", null, null),
-            new User(4,"Adam Smith", null, null),
-            new User(MAX_USER_ID,"Karina Star", null, null)
+            new User(0,"James Doe"),
+            new User(1,"James Rodriguez"),
+            new User(2,"Sanctioned man"),
+            new User(3,"Good Guy"),
+            new User(4,"Adam Smith"),
+            new User(MAX_USER_ID,"Karina Star")
     };
 
-    public static final String USER_TOPIC = "user_info";
+    public static final String TOPIC = "user_info";
 
 
 
@@ -38,7 +40,7 @@ public class UserDataProducer {
 
         Arrays.asList(USERS).forEach(user -> {
             Utils.sleepFor(2);
-            kafkaProducer.send(new ProducerRecord<>(USER_TOPIC, user.getUserId(), user));
+            kafkaProducer.send(new ProducerRecord<>(TOPIC, user.getUserId(), user));
         });
     }
 

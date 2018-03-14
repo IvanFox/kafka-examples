@@ -1,16 +1,40 @@
 package me.ivanlis.example.enricher.messages;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.ToString;
 
-@Value
+@Getter
+@ToString
 public class User {
 
-    Integer userId;
+    private final Integer userId;
 
-    String name;
+    private final String name;
 
-    Address address;
+    private final Address address;
 
-    PhoneNumber phoneNumber;
+    private final PhoneNumber phoneNumber;
 
+    public User(Integer userId, String name, Address address) {
+        this.userId = userId;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = new PhoneNumber("empty");
+    }
+
+    public User(Integer userId, String name) {
+        this.userId = userId;
+        this.name = name;
+        this.address = new Address("empty");
+        this.phoneNumber = new PhoneNumber("empty");
+
+    }
+
+    public User(Integer userId, String name, Address address, PhoneNumber phoneNumber) {
+        this.userId = userId;
+        this.name = name;
+
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
 }
