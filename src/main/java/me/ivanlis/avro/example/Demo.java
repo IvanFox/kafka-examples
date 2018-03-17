@@ -14,8 +14,8 @@ public class Demo {
                 .setAge(31)
                 .setWeight(74.5f)
                 .setHeight(180.0f)
-                .setCustomerEmails(Arrays.asList())
-                .setCustomerAddress(new CustomerAddress("", "", "", Type.ENTERPRISE))
+//                .setCustomerEmails(Arrays.asList())
+//                .setCustomerAddress(new CustomerAddress("", "", "", Type.ENTERPRISE))
 //                .setAutomatedEmail(false)
                 .build();
 

@@ -22,20 +22,21 @@
      "namespace": "com.example.v2",
      "name": "Customer",
      "fields": [
-       { "name": "first_name", "type": "string" },
-       { "name": "middle_name", "type": ["null", "string"], "default": null },
-       { "name": "last_name", "type": "string" },
+       { "name": "firstName", "type": "string" },
+       { "name": "middleName", "type": ["null", "string"], "default": null },
+       { "name": "lastName", "type": "string" },
        { "name": "age", "type": "int" },
        { "name": "height", "type": "float" },
        { "name": "weight", "type": "float" },
-       { "name": "automated_email", "type": "boolean", "default": true },
+       { "name": "automatedEmail", "type": "boolean", "default": true },
        {
-           "name": "customer_emails",
+           "name": "customerEmails",
            "type": {
             "type": "array",
             "items": "string"
-           }
+           },
+           "default": []
         },
-       { "name": "customer_address", "type": "me.ivanlis.v2.CustomerAddress" }
+       { "name": "customerAddress", "type": ["null","me.ivanlis.v2.CustomerAddress"], "default": null }
      ]
 }]
