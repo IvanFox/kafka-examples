@@ -1,36 +1,46 @@
-group 'me.ivanlis'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'com.commercehub.gradle.plugin.avro'
+
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 buildscript {
     repositories {
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
+
     }
     dependencies {
         classpath "com.commercehub.gradle.plugin:gradle-avro-plugin:0.12.0"
     }
-}
-apply plugin: "com.commercehub.gradle.plugin.avro"
 
+    ext {
+        junit = '4.11'
+        confluentVersion = '4.0.0'
+        kafkaVersion = '1.0.0'
+        avroVersion = '1.8.2'
+    }
+}
 repositories {
     mavenCentral()
-    jcenter()
-}
-
-avro {
-    fieldVisibility = "PRIVATE"
+    maven { url 'https://packages.confluent.io/maven' }
 }
 
 dependencies {
-    compile('org.apache.kafka:kafka_2.12:1.0.0')
+    compile("org.apache.kafka:kafka_2.12:${kafkaVersion}")
     // to implement exactly once producer
-    compile('org.apache.kafka:kafka-clients:1.0.0')
-    compile('org.apache.kafka:kafka-streams:1.0.0')
+    compile("org.apache.kafka:kafka-clients:${kafkaVersion}")
+    compile("org.apache.kafka:kafka-streams:${kafkaVersion}")
 
-    compile('org.apache.spark:spark-streaming-kafka_2.10:1.6.3')
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: {kafkaVersion}
+
+    compile("org.apache.avro:avro:${avroVersion}")
+    compile "io.confluent:kafka-streams-avro-serde:$confluentVersion"
+
+//    compile('org.apache.spark:spark-streaming-kafka_2.10:1.6.3')
 
     // Kafka uses those for logging
     compile('org.slf4j:slf4j-api:1.7.25')
@@ -40,9 +50,11 @@ dependencies {
 
     compileOnly('org.projectlombok:lombok:1.16.20')
 
-    compile("org.apache.avro:avro:1.8.2")
-//    compile('org.apache.avro:avro-tools:1.8.2')
 
 
     testCompile('junit:junit:4.12')
+}
+
+avro {
+    fieldVisibility = "PRIVATE"
 }
