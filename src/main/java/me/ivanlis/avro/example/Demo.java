@@ -1,11 +1,8 @@
 package me.ivanlis.avro.example;
 
-import com.example.v2.Customer;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import me.ivanlis.v2.CustomerAddress;
-import me.ivanlis.v2.Type;
+import me.ivanlis.Customer;
 import org.apache.avro.file.DataFileWriter;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.specific.SpecificDatumWriter;
