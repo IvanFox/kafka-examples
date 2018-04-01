@@ -1,6 +1,6 @@
 {
      "type": "record",
-     "namespace": "com.example",
+     "namespace": "me.ivanlis",
      "name": "Customer",
      "doc": "Avro Schema for our Customer",
      "fields": [

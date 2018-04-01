@@ -1,7 +1,7 @@
 [
   {
       "type": "record",
-      "namespace": "me.ivanlis.v2",
+      "namespace": "me.ivanlis",
       "name": "CustomerAddress",
       "fields": [
         { "name": "address", "type": "string" },
@@ -19,8 +19,8 @@
   },
   {
      "type": "record",
-     "namespace": "com.example.v2",
-     "name": "Customer",
+     "namespace": "me.ivanlis",
+     "name": "Customer2",
      "fields": [
        { "name": "firstName", "type": "string" },
        { "name": "middleName", "type": ["null", "string"], "default": null },
@@ -35,8 +35,8 @@
             "type": "array",
             "items": "string"
            },
-           "default": []
+           "default": ["None"]
         },
-       { "name": "customerAddress", "type": ["null","me.ivanlis.v2.CustomerAddress"], "default": null }
+       { "name": "customerAddress", "type": ["null","me.ivanlis.CustomerAddress"], "default": null }
      ]
 }]

@@ -1,11 +1,10 @@
-package me.ivanlis.avro.consumer;
+package me.ivanlis.avro.evolution.v1;
 
 import static java.util.Arrays.asList;
 
-import com.example.v2.Customer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import java.util.Properties;
-import me.ivanlis.avro.producer.AvroProducer;
+import me.ivanlis.Customer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

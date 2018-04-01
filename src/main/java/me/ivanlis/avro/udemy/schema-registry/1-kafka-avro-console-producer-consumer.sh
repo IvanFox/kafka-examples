@@ -15,7 +15,7 @@ kafka-avro-console-producer \
 
 
 # Consume the records from the beginning of the topic:
-kafka-avro-console-consumer --topic test-avro \
+kafka-avro-console-consumer --topic customer-avro \
     --bootstrap-server 127.0.0.1:9092 \
     --property schema.registry.url=http://127.0.0.1:1122 \
     --from-beginning
